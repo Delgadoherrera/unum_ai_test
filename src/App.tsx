@@ -1,55 +1,21 @@
-import React, { useState } from "react";
-import InputPrompt from "./InputPrompt";
-import ParameterInput from "./ParameterInput";
-import ApiResponse from "./ApiResponse";
-import FileInput from "./FileInput";
-
-interface Parameters {
-  chunkSize: number | null;
-  chunkOverlap: number | null;
-  temperature: number | null;
-}
+import React from "react";
+import GlobalMenu from "./components/GlobalMenu";
+import GnosisParameters from "./components/GnosisParameters";
+import { useSelector } from "react-redux";
 
 const App: React.FC = () => {
-  const [prompt, setPrompt] = useState<string>("");
-  const [parameters, setParameters] = useState<Parameters>({
-    chunkSize: null,
-    chunkOverlap: null,
-    temperature: null,
-  });
-  const [file, setFile] = useState<File | null>(null);
-  const [apiResponse, setApiResponse] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const handleSubmit = () => {
-    setLoading(true); // Inicia el indicador de carga
-    const formData = new FormData();
-    formData.append("question", prompt);
-    if (file) formData.append("file", file, file.name);
-    Object.keys(parameters).forEach((key: string) => {
-      const value = parameters[key as keyof Parameters];
-      if (value !== null) {
-        formData.append(key, value.toString());
-      }
-    });
-
-    fetch("https://ledesma.devingfor.art/ia/api/assets/answer", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setApiResponse(JSON.stringify(data, null, 2));
-        setLoading(false); // Detiene el indicador de carga
-      })
-      .catch((error) => {
-        console.error("Error al enviar los datos:", error);
-        setLoading(false); // Detiene el indicador de carga en caso de error
-      });
-  };
-
+  const selectGlobalMenuOpt = (state) => state.data.globalMenuOpt; // Asume que 'data' es el key de tu slice en el root reducer
+  const globalMenuOpt = useSelector(selectGlobalMenuOpt);
+  console.log("globalMenuOut", globalMenuOpt);
   return (
-    <div className="App">
+    <>
+      <div className="appContent">
+        <GlobalMenu />
+        {globalMenuOpt === "Gnosis" && <GnosisParameters />}
+      </div>
+    </>
+
+    /*     <div className="App">
       <FileInput setFile={setFile} />
       <InputPrompt setPrompt={setPrompt} />
       <ParameterInput
@@ -86,7 +52,7 @@ const App: React.FC = () => {
       ) : (
         <ApiResponse response={apiResponse} />
       )}
-    </div>
+    </div> */
   );
 };
 

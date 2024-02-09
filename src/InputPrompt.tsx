@@ -1,3 +1,4 @@
+import TextArea from "antd/es/input/TextArea";
 import React from "react";
 
 interface InputPromptProps {
@@ -11,7 +12,7 @@ const InputPrompt: React.FC<InputPromptProps> = ({ setPrompt }) => {
 
   return (
     <div>
-      <textarea
+      <TextArea
         id="promptInput"
         onChange={handleChange}
         rows={4} // Puedes ajustar el número de filas según tus necesidades

@@ -1,3 +1,4 @@
+import { Badge, Breadcrumb, Input } from 'antd';
 import React from 'react';
 
 interface ParameterInputProps {
@@ -37,8 +38,8 @@ const ParameterInput: React.FC<ParameterInputProps> = ({ name, parameters, setPa
 
   return (
     <div>
-      <label htmlFor={name}>{name}:</label>
-      <input
+      <Breadcrumb> {name}:</Breadcrumb>
+      <Input
         type="number"
         id={name}
         name={name} // Importante para identificar el campo que se está actualizando
