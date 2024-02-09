@@ -6,16 +6,16 @@ import FileInput from "../FileInput";
 import { Button } from "antd";
 
 interface Parameters {
-  chunkSize: number | null;
-  chunkOverlap: number | null;
+  chunk_size: number | null;
+  chunk_overlap: number | null;
   temperature: number | null;
 }
 
 const App: React.FC = () => {
   const [prompt, setPrompt] = useState<string>("");
   const [parameters, setParameters] = useState<Parameters>({
-    chunkSize: null,
-    chunkOverlap: null,
+    chunk_size: null,
+    chunk_overlap: null,
     temperature: null,
   });
   const [file, setFile] = useState<File | null>(null);
@@ -58,6 +58,7 @@ const App: React.FC = () => {
           name="chunk_size"
           setParameters={setParameters}
           parameters={parameters}
+          
         />
         <ParameterInput
           name="chunk_overlap"

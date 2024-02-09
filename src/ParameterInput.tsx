@@ -1,34 +1,31 @@
-import { Badge, Breadcrumb, Input } from 'antd';
+import {  Breadcrumb, Input } from 'antd';
 import React from 'react';
 
 interface ParameterInputProps {
-  name: string;
+  name: 'chunk_size' | 'chunk_overlap' | 'temperature'; // Asegurarse de que name corresponda a las claves
   parameters: {
-    chunkSize: number | null;
-    chunkOverlap: number | null;
+    chunk_size: number | null;
+    chunk_overlap: number | null;
     temperature: number | null;
   };
   setParameters: React.Dispatch<React.SetStateAction<{
-    chunkSize: number | null;
-    chunkOverlap: number | null;
+    chunk_size: number | null;
+    chunk_overlap: number | null;
     temperature: number | null;
   }>>;
 }
 
 const ParameterInput: React.FC<ParameterInputProps> = ({ name, parameters, setParameters }) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    let newValue: number | null = null;
+  // Establecer valores predeterminados
+  const defaultValues = {
+    chunk_size: 3000,
+    chunk_overlap: 1000,
+    temperature: 0.5,
+  };
 
-    if (value !== '') {
-      if (name === 'temperature') {
-        // Permite decimales para 'temperature'
-        newValue = parseFloat(value);
-      } else {
-        // Asegura valores enteros para 'chunkSize' y 'chunkOverlap'
-        newValue = parseInt(value, 10);
-      }
-    }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const newValue: number | null = value !== '' ? parseFloat(value) : null;
 
     setParameters(prevParams => ({
       ...prevParams,
@@ -42,9 +39,10 @@ const ParameterInput: React.FC<ParameterInputProps> = ({ name, parameters, setPa
       <Input
         type="number"
         id={name}
-        name={name} // Importante para identificar el campo que se está actualizando
-        value={parameters[name as keyof typeof parameters] || ''}
+        name={name}
+        value={parameters[name] || ''}
         onChange={handleChange}
+        placeholder={`${defaultValues[name]}`}
         step={name === 'temperature' ? "0.1" : "1"} // Permite incrementos decimales solo para 'temperature'
       />
     </div>
