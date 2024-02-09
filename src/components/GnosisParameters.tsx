@@ -34,7 +34,7 @@ const App: React.FC = () => {
       }
     });
 
-    fetch("https://ledesma.devingfor.art:8087/ia/api/assets/answer", {
+    fetch("https://ledesma.devingfor.art/ia/api/assets/answer", {
       method: "POST",
       body: formData,
     })
