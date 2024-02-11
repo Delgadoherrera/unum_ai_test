@@ -53,8 +53,14 @@ const App: React.FC = () => {
         <ParameterInput
           name="pages"
           setParameters={setParameters}
-          parameters={parameters}          
-        />   
+          parameters={parameters}
+        />
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <p> T = todas las paginas;</p>
+          <p> P = primera pagina;</p>
+          <p> U = ultima pagina;</p>
+          <p> 7 = buscar en la pagina 7;</p>
+        </div>
       </div>
 
       <Button onClick={handleSubmit} disabled={loading}>
